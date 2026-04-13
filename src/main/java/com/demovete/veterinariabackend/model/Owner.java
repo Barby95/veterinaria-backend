@@ -16,6 +16,8 @@ public class Owner {
     private String lastName;
     private Integer age;
     private String dni;
+    //@Enumerated(EnumType.STRING)
+    //private OwnerLevel level = OwnerLevel.JUNIOR; // Esto es para que por defecto el nuevo owner es junior
 
     //Creamos el constructor vario y el que inserte datos
     public Owner() {
@@ -85,6 +87,17 @@ public class Owner {
    // public Long getId() {return id;}
 
     //public void setId(Long id) {this.id = id;}
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'JUNIOR")
+    private OwnerLevel ownerLevel;
+
+    public OwnerLevel getOwnerLevel() {
+        return ownerLevel;
+    }
+
+    public void setOwnerLevel(OwnerLevel ownerLevel) {
+        this.ownerLevel = ownerLevel;
+    }
 
     //TODO [Reverse Engineering] generate columns from DB
 }

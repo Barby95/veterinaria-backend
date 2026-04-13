@@ -1,6 +1,8 @@
 package com.demovete.veterinariabackend.model;
 //Estos se importan cuando hemos puesto @Entity y @Id (no llevan ; al final porque son anotaciones)
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDate;
 //Se importan todos los paquetes import jakarta.persistence.*; y me borraria el de .Id, .GeneratedValue..
@@ -19,6 +21,8 @@ UPDATE animal SET GENERO='MACHO' WHERE id=2
 @Entity
 //Por si le queremos cambiar el nombre de la tabla.
 @Table(name = "ANIMALES")
+@Builder
+@AllArgsConstructor
 public class Animal {
     //Tiene mayor capacidad de almacenamiento el LONG.
     @Id
@@ -40,10 +44,13 @@ public class Animal {
     //vamos agregar enum y fecha de adopcion, tipo de
     //LocalDate(java.time) te tiene en cuenta el calendario, puede aniadirle dias, anios viciestos
     //Podemos ponerle una fecha por defecto con  = LocalDate.now()
-    private LocalDate fechaAdopcion = LocalDate.now();
+
+    private LocalDate fechaAdopcion = LocalDate.now(); // con el.of() para pasarle una fecha concreta
+
 
     @Enumerated(EnumType.STRING)
     //@Column(name = "cat_type") este no e snecesario
+    @Column(columnDefinition = "ENUM('AMERICANO', 'EUROPEO') DEFAULT 'EUROPEO'")
     private catType catType;
 
     public catType getCatType() {
@@ -159,6 +166,7 @@ public class Animal {
                 ", catType=" + catType +
                 '}';
     }
+
 //Nos faltan ver las asociaciones - relaciones entre tablas
     //(esto se hace entre las claves primarias y foraneas), Enum, Agregar fechas
 }
