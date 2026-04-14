@@ -246,12 +246,9 @@ public class VeterinariaBackendApplication {
                             "Nombre del owner: " + (animal.getOwner() != null ? animal.getOwner().getFirstNombre() : "No tiene owner"));
         }
 
-
-
-
-
-
-
+        //Probar a filtrar por edad pero que no sea null
+        List<Animal> animalesEspecie = animalRepository.findByEdadNotNull();
+        System.out.println(animalesEspecie);
     }
 
 }
