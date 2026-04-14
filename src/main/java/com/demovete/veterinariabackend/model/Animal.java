@@ -176,7 +176,7 @@ public class Animal {
                 ", color='" + color + '\'' +
                 ", genero='" + genero + '\'' +
                 ", peso=" + peso +
-                ", owner=" + owner.getId() +
+                ", owner=" + (owner != null ? owner.getId() : null) +
                 ", fechaAdopcion=" + fechaAdopcion +
                 ", catType=" + catType +
                 '}';
