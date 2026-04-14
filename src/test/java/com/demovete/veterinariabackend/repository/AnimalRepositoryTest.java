@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.*;
 //lo vemos en las librerias externas
 //cada uno de estos test son transaccionales se supone que cuando acaba el test desace los cambios hechos para no afectar otros.
 @DataJpaTest
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+//@Builder //QUITAMOS ESTO PARA QUE FUNCIONE EL TEST
+//@NoArgsConstructor //QUITAMOS ESTO PARA QUE FUNCIONE EL TEST
+//@AllArgsConstructor //QUITAMOS ESTO PARA QUE FUNCIONE EL TEST
 
 class AnimalRepositoryTest {
 
@@ -60,18 +60,22 @@ class AnimalRepositoryTest {
         //Esto es con el constructor o lo podemos hacer con el Builder pero para que funcione hay que ponerle una anotacion a la clase @Builder y te pide constructor
 
         animal1 = new Animal();
-        //Builder me deja ponerle las variables que necesite, el constructor debo ponerlas a todas y en orden
-        animal2 = Animal.builder().color("gris").build();
-        //Para guardar en la base de datos:, podemos guardarlo en el metodo save()
+        animal1.setName("Maximo");
+        animal1.setColor("Amarillo");
+        animal1.setActive(true);
         repository.save(animal1);
+        //Builder me deja ponerle las variables que necesite, el constructor debo ponerlas a todas y en orden
 
+        animal2 = Animal.builder().color("Gris").active(true).name("Pichu").build();
+        //Para guardar en la base de datos:, podemos guardarlo en el metodo save()
+        repository.save(animal2); // FALTABA ESTO
     }
 
     //Es importante en cada test tener un assert
     @Test
     void count(){
         assertEquals(2, repository.count());
-    }
+    } //AHORA TENGO 2 ANIMALES DEBERIA FUNCIONAR
 
     @Test
     void existsById() {
@@ -90,7 +94,7 @@ class AnimalRepositoryTest {
         assertTrue(repository.existsById(animal.getId()));
 
     }
-
+    //ESTE FALLABA PORQUE ESTABA MAL MI SETUP()
     @Test
     void saveAll() {
         //Creamos una lista que puede ser de la manera clasica, mutable que puede agregar elementos con el new
@@ -117,7 +121,7 @@ class AnimalRepositoryTest {
     @Test
     void findById() {
         //Optional es para NO tratar con null de manera directa,
-        Optional<Animal> animalOptional = repository.findById(animal1.getId());
+        Optional<Animal> animalOptional = repository.findById(animal2.getId()); //HABIA PUESTO ANIMAL1. PERO LO CREE SIN COLOR, ERA ANIMAL2 - TIENE COLOR GRIS
         assertTrue(animalOptional.isPresent());
 
         Animal animal = animalOptional.get();
@@ -127,10 +131,11 @@ class AnimalRepositoryTest {
     @Test
     void findAll() {
         //Animal animales = repository.findAll();
+        List<Animal> animales = repository.findAll();
         //no haria falta este
-        //assertNotNull(animales);
+        assertNotNull(animales);
         //assertEquals(2, animales.size());
-        //assertTrue(animales.size()>= 2);
+        assertTrue(animales.size()>= 2);
     }
 
     @Test
