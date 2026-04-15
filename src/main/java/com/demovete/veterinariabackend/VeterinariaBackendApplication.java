@@ -2,6 +2,7 @@ package com.demovete.veterinariabackend;
 
 import com.demovete.veterinariabackend.model.Animal;
 import com.demovete.veterinariabackend.model.Owner;
+import com.demovete.veterinariabackend.model.OwnerLevel;
 import com.demovete.veterinariabackend.model.catType;
 import com.demovete.veterinariabackend.repository.AnimalRepository;
 import com.demovete.veterinariabackend.repository.OwnerRepository;
@@ -207,10 +208,12 @@ public class VeterinariaBackendApplication {
 
         Owner ownerAsociacion = new Owner();
         ownerAsociacion.setFirstNombre("Patricia");
+        ownerAsociacion.setOwnerLevel(OwnerLevel.JUNIOR);
         ownerRepository.save(ownerAsociacion);
 
         Animal animalAsociacion1 = new Animal();
         animalAsociacion1.setName("Khloe");
+        animalAsociacion1.setEdad(10);
         animalAsociacion1.setFechaAdopcion(LocalDate.of(2018, 11, 15));
         animalAsociacion1.setOwner(ownerAsociacion); // aqui lo estamos asociando a ese owner que acabamos de crear
         animalRepository.save(animalAsociacion1);
@@ -218,6 +221,7 @@ public class VeterinariaBackendApplication {
 
         Animal animalAsociacion2 = new Animal();
         animalAsociacion2.setName("Nina");
+        animalAsociacion2.setEdad(2);
         animalAsociacion2.setFechaAdopcion(LocalDate.of(2025, 5, 19));
         animalAsociacion2.setOwner(ownerAsociacion); //aqui lo estamos asociando a ese owner que acabamos de crear
         //Aqui lo estamos guardando en la BD
@@ -249,6 +253,15 @@ public class VeterinariaBackendApplication {
         //Probar a filtrar por edad pero que no sea null
         List<Animal> animalesEspecie = animalRepository.findByEdadNotNull();
         System.out.println(animalesEspecie);
+
+        System.out.println("FILTRAR ANIMALES POR TIPO DE OWNER(JUNIOR, SENIOR, CRACK)");
+        for (var a : animalRepository.findByOwner_OwnerLevel(OwnerLevel.JUNIOR))
+            System.out.println(a);
+
+        System.out.println("FILTRAR ANIMALES POR EDAD MAYOR O IGUAL QUE");
+        for (var a: animalRepository.findByEdadGreaterThanEqual(1))
+            System.out.println(a);
+
     }
 
 }

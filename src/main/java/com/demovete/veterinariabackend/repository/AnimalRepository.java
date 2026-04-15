@@ -1,6 +1,7 @@
 package com.demovete.veterinariabackend.repository;
 
 import com.demovete.veterinariabackend.model.Animal;
+import com.demovete.veterinariabackend.model.OwnerLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
@@ -22,4 +23,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Collection<Object> animalesActive();
 
     List<Animal> findAllByActiveTrueAndAnimalName(String name);
+
+    List<Animal> findByOwner_OwnerLevel(OwnerLevel ownerLevel);
+
+    List<Animal> findByEdadGreaterThanEqual(Integer edad);
+
+
 }

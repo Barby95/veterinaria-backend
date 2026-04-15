@@ -69,7 +69,7 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     //@Column(name = "cat_type") este no e snecesario
     @Column(columnDefinition = "ENUM('AMERICANO', 'EUROPEO') DEFAULT 'EUROPEO'")
-    private catType catType = catType.EUROPEO;
+    private catType catType;
 
     public Owner getOwner() {
         return owner;
